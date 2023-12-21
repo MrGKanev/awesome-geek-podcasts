@@ -18,16 +18,18 @@ def clean_urls(urls):
 
 def check_urls(urls):
     invalid_urls = []
-    with tqdm(total=len(urls), desc="Checking URLs", unit="URL") as pbar:
-        for url in urls:
-            try:
-                response = requests.get(url)
-                if response.status_code != 200:
+    with tqdm(total=len(urls), desc="Checking URLs", unit="URL", position=0, leave=True) as pbar:
+        with open('url_check_logs.txt', 'a') as log_file:
+            for url in urls:
+                try:
+                    response = requests.get(url)
+                    if response.status_code != 200:
+                        invalid_urls.append(url)
+                        log_file.write(f"URL: {url} | Status Code: {response.status_code}\n")
+                except requests.exceptions.RequestException as e:
+                    log_file.write(f"Error occurred while checking URL {url}: {e}\n")
                     invalid_urls.append(url)
-            except Exception as e:
-                print(f"Error occurred while checking URL {url}: {e}")
-                invalid_urls.append(url)
-            pbar.update(1)
+                pbar.update(1)
     return invalid_urls
 
 def main():
@@ -37,7 +39,7 @@ def main():
     invalid_urls = check_urls(cleaned_urls)
 
     if invalid_urls:
-        print("The following URLs did not return a 200 status code:")
+        print("The following URLs did not return a 200 status code. Check 'url_check_logs.txt' for details:")
         for url in invalid_urls:
             print(url)
     else:
