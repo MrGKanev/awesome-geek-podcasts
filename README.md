@@ -1,5 +1,5 @@
 
-# Awesome Geek Podcasts [![awesome](https://cdn.rawgit.com/sindresorhus/awesome/d7305f38d29fed78fa85652e3a63e154dd8e8829/media/badge.svg)](https://github.com/sindresorhus/awesome)
+# Awesome Geek Podcasts
 
 A curated list of podcasts we like to listen to. Old/Original [list](https://github.com/guipdutra/awesome-geek-podcasts).
 
