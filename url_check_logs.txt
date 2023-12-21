@@ -1,0 +1,70 @@
+URL: https://cdn.rawgit.com/sindresorhus/awesome/d7305f38d29fed78fa85652e3a63e154dd8e8829/media/badge.svghttps://github.com/sindresorhus/awesome | Status Code: 404
+URL: https://github.com/guipdutra/awesome-geek-podcasts. | Status Code: 404
+URL: https://findingada.com/ | Status Code: 403
+URL: http://www.jupiterbroadcasting.com/show/asknoah/ | Status Code: 404
+URL: http://awayfromthekeyboard.com/category/podcasts/ | Status Code: 406
+URL: https://itunes.apple.com/us/podcast/aws-re-invent-2015/id1041854841mt2ign-mptuo3D4 | Status Code: 404
+URL: https://s3.amazonaws.com/reinvent-podcasts/AWS_reInvent2015_PodcastRSS.xml- | Status Code: 403
+Error occurred while checking URL http://buildphase.fm/: HTTPConnectionPool(host='buildphase.fm', port=80): Max retries exceeded with url: / (Caused by NameResolutionError("<urllib3.connection.HTTPConnection object at 0x104977d10>: Failed to resolve 'buildphase.fm' ([Errno 8] nodename nor servname provided, or not known)"))
+URL: https://blog.codepen.io/radio/ | Status Code: 403
+URL: https://www.codingblocks.net/ | Status Code: 403
+Error occurred while checking URL https://completedeveloperpodcast.com/: HTTPSConnectionPool(host='completedeveloperpodcast.com', port=443): Max retries exceeded with url: / (Caused by NameResolutionError("<urllib3.connection.HTTPSConnection object at 0x10496bd50>: Failed to resolve 'completedeveloperpodcast.com' ([Errno 8] nodename nor servname provided, or not known)"))
+Error occurred while checking URL http://devnology.nl/podcasts: HTTPConnectionPool(host='devnology.nl', port=80): Max retries exceeded with url: /podcasts (Caused by ConnectTimeoutError(<urllib3.connection.HTTPConnection object at 0x104987550>, 'Connection to devnology.nl timed out. (connect timeout=None)'))
+Error occurred while checking URL https://emberweekend.com/episodes: HTTPSConnectionPool(host='emberweekend.com', port=443): Max retries exceeded with url: /episodes (Caused by NameResolutionError("<urllib3.connection.HTTPSConnection object at 0x104972d10>: Failed to resolve 'emberweekend.com' ([Errno 8] nodename nor servname provided, or not known)"))
+Error occurred while checking URL https://elmtown.audio/: HTTPSConnectionPool(host='elmtown.audio', port=443): Max retries exceeded with url: / (Caused by NameResolutionError("<urllib3.connection.HTTPSConnection object at 0x104992f90>: Failed to resolve 'elmtown.audio' ([Errno 8] nodename nor servname provided, or not known)"))
+URL: http://entreprogrammers.com/ | Status Code: 500
+URL: http://fragmentedpodcast.com/ | Status Code: 403
+Error occurred while checking URL https://garbage.fm/: HTTPSConnectionPool(host='garbage.fm', port=443): Max retries exceeded with url: / (Caused by NameResolutionError("<urllib3.connection.HTTPSConnection object at 0x104987390>: Failed to resolve 'garbage.fm' ([Errno 8] nodename nor servname provided, or not known)"))
+URL: https://javascriptair.com/ | Status Code: 520
+URL: http://sixgun.org/linuxoutlaws/ | Status Code: 404
+URL: http://www.jupiterbroadcasting.com/show/linuxun/ | Status Code: 404
+Error occurred while checking URL http://nodeup.com/: HTTPConnectionPool(host='nodeup.com', port=80): Max retries exceeded with url: / (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x104975510>: Failed to establish a new connection: [Errno 61] Connection refused'))
+URL: http://opensourcesystempodcast.vf.io/ | Status Code: 406
+Error occurred while checking URL https://ourludicrousfuture.com/: HTTPSConnectionPool(host='ourludicrousfuture.com', port=443): Max retries exceeded with url: / (Caused by NameResolutionError("<urllib3.connection.HTTPSConnection object at 0x1049aae90>: Failed to resolve 'ourludicrousfuture.com' ([Errno 8] nodename nor servname provided, or not known)"))
+Error occurred while checking URL http://reactive.audio/: HTTPConnectionPool(host='reactive.audio', port=80): Max retries exceeded with url: / (Caused by NameResolutionError("<urllib3.connection.HTTPConnection object at 0x104972a50>: Failed to resolve 'reactive.audio' ([Errno 8] nodename nor servname provided, or not known)"))
+URL: https://www.nasa.gov/kennedy/rocketranch | Status Code: 404
+URL: https://www.tor.com/features/series/rocket-talk-podcast/ | Status Code: 403
+URL: https://www.pluralsight.com/searchqruby | Status Code: 404
+URL: https://softwareengineeringdaily.com/ | Status Code: 403
+URL: https://www.startalkradio.net/sfid22493post_typesshow | Status Code: 403
+URL: http://dain.io/startherefm/ | Status Code: 404
+URL: https://www.syfy.com/syfywire/syfy25/podcast-episodes | Status Code: 404
+URL: http://www.talkingcode.com/ | Status Code: 403
+Error occurred while checking URL http://testinginthepub.co.uk/testinginthepub/: HTTPConnectionPool(host='testinginthepub.co.uk', port=80): Max retries exceeded with url: /testinginthepub/ (Caused by ConnectTimeoutError(<urllib3.connection.HTTPConnection object at 0x104989110>, 'Connection to testinginthepub.co.uk timed out. (connect timeout=None)'))
+URL: http://agilecoffee.com/ | Status Code: 406
+URL: https://academy.datastax.com/weekly-show | Status Code: 404
+URL: http://www.fiveminutegeekshow.com | Status Code: 404
+URL: http://www.jupiterbroadcasting.com/tag/linux-action-show/ | Status Code: 404
+Error occurred while checking URL http://looselycoupled.info/: HTTPSConnectionPool(host='www.looselycoupled.info', port=443): Max retries exceeded with url: / (Caused by SSLError(SSLError(1, '[SSL: TLSV1_ALERT_INTERNAL_ERROR] tlsv1 alert internal error (_ssl.c:1006)')))
+Error occurred while checking URL https://pathtoperf.com/: HTTPSConnectionPool(host='pathtoperf.com', port=443): Max retries exceeded with url: / (Caused by NewConnectionError('<urllib3.connection.HTTPSConnection object at 0x104971850>: Failed to establish a new connection: [Errno 61] Connection refused'))
+URL: https://stackoverflow.blog/podcasts/ | Status Code: 404
+URL: http://5by5.tv/webahead | Status Code: 404
+URL: http://ttlpodcast.com/ | Status Code: 436
+URL: https://imasters.com.br/perfil/databasecast/ | Status Code: 403
+Error occurred while checking URL https://foocast.io/: HTTPSConnectionPool(host='foocast.io', port=443): Max retries exceeded with url: / (Caused by NameResolutionError("<urllib3.connection.HTTPSConnection object at 0x1049a8ed0>: Failed to resolve 'foocast.io' ([Errno 8] nodename nor servname provided, or not known)"))
+URL: http://galeradorau.com.br/category/podcast/galera-do-rau/ | Status Code: 406
+URL: https://twitter.com/LovelacePodcast | Status Code: 400
+URL: https://www.b9.com.br/podcasts/naruhodo/ | Status Code: 403
+Error occurred while checking URL http://www.opendevpodcast.com.br: HTTPConnectionPool(host='www.opendevpodcast.com.br', port=80): Max retries exceeded with url: / (Caused by NameResolutionError("<urllib3.connection.HTTPConnection object at 0x104973190>: Failed to resolve 'www.opendevpodcast.com.br' ([Errno 8] nodename nor servname provided, or not known)"))
+URL: https://astellainvest.com/playbook/ | Status Code: 404
+URL: https://souforce.cloud/podcast/ | Status Code: 403
+URL: https://tecnoblog.net/categoria/podcast/ | Status Code: 403
+Error occurred while checking URL http://tecnologicamentearretado.com.br: HTTPConnectionPool(host='tecnologicamentearretado.com.br', port=80): Max retries exceeded with url: / (Caused by NameResolutionError("<urllib3.connection.HTTPConnection object at 0x1049c25d0>: Failed to resolve 'tecnologicamentearretado.com.br' ([Errno 8] nodename nor servname provided, or not known)"))
+Error occurred while checking URL https://zofe.com.br/: HTTPSConnectionPool(host='zofe.com.br', port=443): Max retries exceeded with url: / (Caused by NameResolutionError("<urllib3.connection.HTTPSConnection object at 0x104970450>: Failed to resolve 'zofe.com.br' ([Errno 8] nodename nor servname provided, or not known)"))
+Error occurred while checking URL https://compilando.audio/: HTTPSConnectionPool(host='compilando.audio', port=443): Max retries exceeded with url: / (Caused by NameResolutionError("<urllib3.connection.HTTPSConnection object at 0x104953890>: Failed to resolve 'compilando.audio' ([Errno 8] nodename nor servname provided, or not known)"))
+URL: https://www.ubuntuleon.com/searchqpodcastmax-results20by-datetrue | Status Code: 404
+Error occurred while checking URL http://radiojs.ru/: HTTPConnectionPool(host='radiojs.ru', port=80): Max retries exceeded with url: / (Caused by NameResolutionError("<urllib3.connection.HTTPConnection object at 0x1049ab290>: Failed to resolve 'radiojs.ru' ([Errno 8] nodename nor servname provided, or not known)"))
+URL: http://www.bloguelinux.ca/ | Status Code: 503
+URL: https://twitter.com/kwasniew | Status Code: 400
+URL: https://twitter.com/kubek2k | Status Code: 400
+URL: https://twitter.com/peel | Status Code: 400
+Error occurred while checking URL https://devpod.org/: HTTPSConnectionPool(host='devpod.org', port=443): Max retries exceeded with url: / (Caused by SSLError(SSLError(1, '[SSL] record layer failure (_ssl.c:1006)')))
+URL: https://github.com/ustun. | Status Code: 404
+Error occurred while checking URL http://frontendfriday.fi/: HTTPConnectionPool(host='frontendfriday.fi', port=80): Max retries exceeded with url: / (Caused by NameResolutionError("<urllib3.connection.HTTPConnection object at 0x1049b9b90>: Failed to resolve 'frontendfriday.fi' ([Errno 8] nodename nor servname provided, or not known)"))
+Error occurred while checking URL http://rebuild.fm/: HTTPSConnectionPool(host='rebuild.fm', port=443): Max retries exceeded with url: / (Caused by SSLError(SSLError(1, '[SSL: SSLV3_ALERT_HANDSHAKE_FAILURE] ssl/tls alert handshake failure (_ssl.c:1006)')))
+Error occurred while checking URL https://ceritanyadeveloper.com/: HTTPSConnectionPool(host='ceritanyadeveloper.com', port=443): Max retries exceeded with url: / (Caused by ConnectTimeoutError(<urllib3.connection.HTTPSConnection object at 0x1049c8b50>, 'Connection to ceritanyadeveloper.com timed out. (connect timeout=None)'))
+Error occurred while checking URL https://tehataukopi.club/: HTTPSConnectionPool(host='tehataukopi.club', port=443): Max retries exceeded with url: / (Caused by SSLError(SSLCertVerificationError(1, "[SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: Hostname mismatch, certificate is not valid for 'tehataukopi.club'. (_ssl.c:1006)")))
+Error occurred while checking URL https://devmuslim.id/: HTTPSConnectionPool(host='devmuslim.id', port=443): Max retries exceeded with url: / (Caused by NameResolutionError("<urllib3.connection.HTTPSConnection object at 0x1049a3f90>: Failed to resolve 'devmuslim.id' ([Errno 8] nodename nor servname provided, or not known)"))
+Error occurred while checking URL https://techsnacks.nl/: HTTPSConnectionPool(host='techsnacks.nl', port=443): Max retries exceeded with url: / (Caused by SSLError(SSLCertVerificationError(1, "[SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: Hostname mismatch, certificate is not valid for 'techsnacks.nl'. (_ssl.c:1006)")))
+URL: https://twitter.com/Zeepcast | Status Code: 400
+Error occurred while checking URL http://www.doggcatcher.com: HTTPConnectionPool(host='www.doggcatcher.com', port=80): Max retries exceeded with url: / (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x1049bbd90>: Failed to establish a new connection: [Errno 51] Network is unreachable'))
