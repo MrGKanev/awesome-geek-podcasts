@@ -1,9 +1,24 @@
 import re
 import requests
+import os
 from tqdm import tqdm
 import git
 from datetime import datetime
 
+
+def get_script_directory():
+    return os.path.dirname(os.path.abspath(__file__))
+
+def get_readme_path():
+    script_dir = get_script_directory()
+    return os.path.join(script_dir, '../readme.md')  # Update this path accordingly
+
+def get_urls_from_readme(file_path):
+    with open(file_path, 'r') as file:
+        content = file.read()
+        urls = re.findall(r'(https?://\S+)', content)
+        return urls
+    
 def get_urls_from_readme(file_path):
     with open(file_path, 'r') as file:
         content = file.read()
@@ -52,7 +67,7 @@ def create_branch_and_commit(commit_message):
     repo.index.commit(commit_message)
 
 def main():
-    file_path = 'readme.md'  # Replace this with the path to your readme file
+    file_path = get_readme_path()
     urls = get_urls_from_readme(file_path)
     cleaned_urls = clean_urls(urls)
     invalid_urls = check_urls(cleaned_urls)
