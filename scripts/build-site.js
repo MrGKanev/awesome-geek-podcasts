@@ -241,17 +241,16 @@ const htmlTemplate = `
       results.forEach(podcast => {
         const podcastElement = document.createElement('div');
         podcastElement.className = 'podcast-item border-b border-gray-200 pb-4 last:border-0';
-        podcastElement.innerHTML = `
-          <div class="flex items-start justify-between">
-            <div>
-              <a href="${podcast.url}" class="text-xl font-semibold text-blue-600 hover:text-blue-800 transition" target="_blank">
-                ${podcast.name}
-              </a>
-              <p class="text-gray-700 mt-1">${podcast.description}</p>
-            </div>
-            <span class="text-sm bg-blue-100 text-blue-800 px-2 py-1 rounded-full">${podcast.language}</span>
-          </div>
-        `;
+        podcastElement.innerHTML = 
+          '<div class="flex items-start justify-between">' +
+            '<div>' +
+              '<a href="' + podcast.url + '" class="text-xl font-semibold text-blue-600 hover:text-blue-800 transition" target="_blank">' +
+                podcast.name +
+              '</a>' +
+              '<p class="text-gray-700 mt-1">' + podcast.description + '</p>' +
+            '</div>' +
+            '<span class="text-sm bg-blue-100 text-blue-800 px-2 py-1 rounded-full">' + podcast.language + '</span>' +
+          '</div>';
         
         resultsContainer.appendChild(podcastElement);
       });
