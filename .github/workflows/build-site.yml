@@ -26,7 +26,8 @@ jobs:
           
       - name: Create JSON generator script
         run: |
-          cat > generate-json.js << 'EOL'
+          mkdir -p scripts
+          cat > scripts/generate-json.js << 'EOL'
           const fs = require('fs');
           const { marked } = require('marked');
           const { JSDOM } = require('jsdom');
@@ -67,7 +68,8 @@ jobs:
                         name: link.textContent,
                         url: link.href,
                         description: item.textContent.replace(link.textContent, '').trim(),
-                        language: language
+                        language: language,
+                        languageId: languageId
                       };
                       allPodcasts.push(podcast);
                     }
@@ -104,8 +106,15 @@ jobs:
           
           // Write to file
           if (!fs.existsSync('public')) {
-            fs.mkdirSync('public');
+            fs.mkdirSync('public', { recursive: true });
           }
+          if (!fs.existsSync('public/js')) {
+            fs.mkdirSync('public/js', { recursive: true });
+          }
+          if (!fs.existsSync('public/css')) {
+            fs.mkdirSync('public/css', { recursive: true });
+          }
+          
           fs.writeFileSync('public/data.json', JSON.stringify(data, null, 2));
           
           console.log('JSON data generated successfully!');
@@ -115,288 +124,18 @@ jobs:
         run: npm install marked jsdom
         
       - name: Generate JSON data
-        run: node generate-json.js
+        run: node scripts/generate-json.js
       
-      - name: Create static website files
+      - name: Copy static files
         run: |
-          mkdir -p public/css
+          # Copy index.html
+          cp index.html public/
           
-          # Create index.html
-          cat > public/index.html << 'EOL'
-          <!DOCTYPE html>
-          <html lang="en">
-          <head>
-            <meta charset="UTF-8">
-            <meta name="viewport" content="width=device-width, initial-scale=1.0">
-            <title>Awesome Geek Podcasts</title>
-            <meta name="description" content="A curated list of awesome geek podcasts in various languages">
-            <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
-            <link rel="stylesheet" href="css/style.css">
-          </head>
-          <body class="bg-gray-50 min-h-screen">
-            <div id="app" class="container mx-auto px-4 py-8">
-              <header class="mb-8 text-center">
-                <h1 id="title" class="text-4xl font-bold text-gray-800 mb-2">Loading...</h1>
-                <p id="description" class="text-lg text-gray-600">Please wait...</p>
-                <div class="mt-4">
-                  <a href="https://github.com/avelino/awesome-geek-podcasts" class="px-4 py-2 bg-gray-800 text-white rounded hover:bg-gray-700 inline-block">
-                    View on GitHub
-                  </a>
-                </div>
-              </header>
-              
-              <div class="mb-6">
-                <input 
-                  type="text" 
-                  id="search-input" 
-                  placeholder="Search podcasts..." 
-                  class="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-                >
-              </div>
-              
-              <div class="mb-8 bg-white rounded-lg shadow-md p-6">
-                <h2 class="text-2xl font-bold text-gray-800 mb-4">Languages</h2>
-                <div id="language-buttons" class="flex flex-wrap gap-2">
-                  <button data-lang="all" class="lang-btn bg-blue-500 text-white px-3 py-1 rounded-full">All</button>
-                </div>
-              </div>
-              
-              <div id="search-results" class="hidden mb-8 bg-white rounded-lg shadow-md p-6">
-                <h2 class="text-2xl font-bold text-gray-800 mb-4">Search Results</h2>
-                <div id="results-container" class="space-y-6"></div>
-              </div>
-              
-              <div id="language-sections" class="space-y-8">
-                <!-- Language sections will be inserted here -->
-              </div>
-              
-              <div id="tooling-section" class="hidden mt-8 bg-white rounded-lg shadow-md p-6">
-                <h2 class="text-2xl font-bold text-gray-800 mb-4">Tooling</h2>
-                <div id="tooling-content"></div>
-              </div>
-              
-              <footer class="mt-12 text-center text-gray-600">
-                <p>Generated from <a href="https://github.com/avelino/awesome-geek-podcasts" class="text-blue-600 hover:underline">awesome-geek-podcasts</a> repository.</p>
-                <p id="last-updated" class="mt-2 text-sm">Last updated: Loading...</p>
-              </footer>
-            </div>
-            
-            <script src="js/app.js"></script>
-          </body>
-          </html>
-          EOL
+          # Copy JavaScript
+          cp js/app.js public/js/
           
-          # Create CSS file
-          cat > public/css/style.css << 'EOL'
-          .podcast-item {
-            transition: all 0.2s ease-in-out;
-          }
-          
-          .podcast-item:hover {
-            transform: translateX(5px);
-          }
-          
-          .lang-btn {
-            transition: all 0.2s ease-in-out;
-          }
-          
-          .lang-btn:hover {
-            transform: scale(1.05);
-          }
-          
-          .hidden {
-            display: none;
-          }
-          EOL
-          
-          # Create JavaScript file
-          mkdir -p public/js
-          cat > public/js/app.js << 'EOL'
-          document.addEventListener('DOMContentLoaded', async function() {
-            try {
-              // Fetch podcast data
-              const response = await fetch('data.json');
-              const data = await response.json();
-              
-              // Update title and description
-              document.getElementById('title').textContent = data.title;
-              document.getElementById('description').textContent = data.description;
-              
-              // Format date
-              const lastUpdated = new Date(data.lastUpdated);
-              document.getElementById('last-updated').textContent = `Last updated: ${lastUpdated.toLocaleDateString()}`;
-              
-              // Create language buttons
-              const languageButtons = document.getElementById('language-buttons');
-              data.languages.forEach(language => {
-                const button = document.createElement('button');
-                button.textContent = language.name;
-                button.className = 'lang-btn bg-blue-100 text-blue-800 px-3 py-1 rounded-full';
-                button.dataset.lang = language.id;
-                languageButtons.appendChild(button);
-              });
-              
-              // Create language sections
-              const languageSections = document.getElementById('language-sections');
-              data.languages.forEach(language => {
-                const podcasts = data.podcasts.filter(p => p.language === language.name);
-                
-                const section = document.createElement('section');
-                section.id = `section-${language.id}`;
-                section.className = 'language-section bg-white rounded-lg shadow-md p-6';
-                section.dataset.language = language.id;
-                
-                const heading = document.createElement('h2');
-                heading.className = 'text-2xl font-bold text-gray-800 mb-6';
-                heading.textContent = `In ${language.name}`;
-                section.appendChild(heading);
-                
-                const podcastList = document.createElement('div');
-                podcastList.className = 'space-y-6';
-                
-                podcasts.forEach(podcast => {
-                  const podcastItem = document.createElement('div');
-                  podcastItem.className = 'podcast-item border-b border-gray-200 pb-4 last:border-0';
-                  
-                  const link = document.createElement('a');
-                  link.href = podcast.url;
-                  link.className = 'text-xl font-semibold text-blue-600 hover:text-blue-800 transition';
-                  link.textContent = podcast.name;
-                  link.target = '_blank';
-                  
-                  const description = document.createElement('p');
-                  description.className = 'text-gray-700 mt-1';
-                  description.textContent = podcast.description;
-                  
-                  podcastItem.appendChild(link);
-                  podcastItem.appendChild(description);
-                  podcastList.appendChild(podcastItem);
-                });
-                
-                section.appendChild(podcastList);
-                languageSections.appendChild(section);
-              });
-              
-              // Add tooling section if available
-              if (data.tooling) {
-                const toolingSection = document.getElementById('tooling-section');
-                const toolingContent = document.getElementById('tooling-content');
-                toolingContent.innerHTML = data.tooling;
-                toolingSection.classList.remove('hidden');
-              }
-              
-              // Set up search functionality
-              const searchInput = document.getElementById('search-input');
-              const searchResults = document.getElementById('search-results');
-              const resultsContainer = document.getElementById('results-container');
-              
-              searchInput.addEventListener('input', function() {
-                const searchTerm = this.value.toLowerCase().trim();
-                
-                if (searchTerm.length < 2) {
-                  searchResults.classList.add('hidden');
-                  languageSections.classList.remove('hidden');
-                  return;
-                }
-                
-                const matches = data.podcasts.filter(podcast => 
-                  podcast.name.toLowerCase().includes(searchTerm) || 
-                  podcast.description.toLowerCase().includes(searchTerm)
-                );
-                
-                if (matches.length > 0) {
-                  renderSearchResults(matches);
-                  searchResults.classList.remove('hidden');
-                  languageSections.classList.add('hidden');
-                } else {
-                  resultsContainer.innerHTML = '<p class="text-gray-500">No podcasts found matching your search.</p>';
-                  searchResults.classList.remove('hidden');
-                  languageSections.classList.add('hidden');
-                }
-              });
-              
-              function renderSearchResults(results) {
-                resultsContainer.innerHTML = '';
-                
-                results.forEach(podcast => {
-                  const podcastElement = document.createElement('div');
-                  podcastElement.className = 'podcast-item border-b border-gray-200 pb-4 last:border-0';
-                  
-                  const content = document.createElement('div');
-                  content.className = 'flex items-start justify-between';
-                  
-                  const leftContent = document.createElement('div');
-                  
-                  const link = document.createElement('a');
-                  link.href = podcast.url;
-                  link.className = 'text-xl font-semibold text-blue-600 hover:text-blue-800 transition';
-                  link.textContent = podcast.name;
-                  link.target = '_blank';
-                  
-                  const description = document.createElement('p');
-                  description.className = 'text-gray-700 mt-1';
-                  description.textContent = podcast.description;
-                  
-                  leftContent.appendChild(link);
-                  leftContent.appendChild(description);
-                  
-                  const languageBadge = document.createElement('span');
-                  languageBadge.className = 'text-sm bg-blue-100 text-blue-800 px-2 py-1 rounded-full';
-                  languageBadge.textContent = podcast.language;
-                  
-                  content.appendChild(leftContent);
-                  content.appendChild(languageBadge);
-                  podcastElement.appendChild(content);
-                  
-                  resultsContainer.appendChild(podcastElement);
-                });
-              }
-              
-              // Set up language filtering
-              const allButtons = document.querySelectorAll('.lang-btn');
-              const sections = document.querySelectorAll('.language-section');
-              
-              allButtons.forEach(btn => {
-                btn.addEventListener('click', function() {
-                  const lang = this.dataset.lang;
-                  
-                  // Clear search
-                  searchInput.value = '';
-                  searchResults.classList.add('hidden');
-                  languageSections.classList.remove('hidden');
-                  
-                  // Update button styles
-                  allButtons.forEach(b => {
-                    b.classList.remove('bg-blue-500', 'text-white');
-                    b.classList.add('bg-blue-100', 'text-blue-800');
-                  });
-                  this.classList.remove('bg-blue-100', 'text-blue-800');
-                  this.classList.add('bg-blue-500', 'text-white');
-                  
-                  // Filter sections
-                  if (lang === 'all') {
-                    sections.forEach(section => {
-                      section.classList.remove('hidden');
-                    });
-                  } else {
-                    sections.forEach(section => {
-                      if (section.dataset.language === lang) {
-                        section.classList.remove('hidden');
-                      } else {
-                        section.classList.add('hidden');
-                      }
-                    });
-                  }
-                });
-              });
-              
-            } catch (error) {
-              console.error('Error loading podcast data:', error);
-              document.getElementById('title').textContent = 'Error Loading Data';
-              document.getElementById('description').textContent = 'Please try again later or check the console for details.';
-            }
-          });
-          EOL
+          # Copy CSS
+          cp css/style.css public/css/
         
       - name: Deploy to GitHub Pages
         uses: JamesIves/github-pages-deploy-action@4.1.5

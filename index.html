@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Awesome Geek Podcasts</title>
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body class="bg-gray-100">
+  <header class="bg-white shadow-md">
+    <div class="container mx-auto px-4 py-6">
+      <h1 class="text-3xl font-bold text-center text-gray-800">Awesome Geek Podcasts</h1>
+      <p class="text-center text-gray-600 mt-2">A curated list of podcasts we like to listen to</p>
+    </div>
+  </header>
+
+  <main class="container mx-auto px-4 py-8">
+    <div class="mb-8">
+      <div class="flex flex-col md:flex-row gap-4">
+        <div class="w-full md:w-2/3">
+          <input type="text" id="searchInput" placeholder="Search podcasts..."
+            class="w-full p-3 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500">
+        </div>
+        <div class="w-full md:w-1/3">
+          <select id="languageFilter"
+            class="w-full p-3 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500">
+            <option value="all">All Languages</option>
+          </select>
+        </div>
+      </div>
+    </div>
+
+    <div id="resultsCount" class="mb-4 text-gray-600 font-medium"></div>
+
+    <div id="podcastList" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+      <!-- Podcasts will be loaded here -->
+      <div class="podcast-skeleton bg-white rounded-lg shadow-md p-4 animate-pulse">
+        <div class="h-6 bg-gray-200 rounded w-3/4 mb-3"></div>
+        <div class="h-4 bg-gray-200 rounded w-full mb-2"></div>
+        <div class="h-4 bg-gray-200 rounded w-5/6"></div>
+      </div>
+      <div class="podcast-skeleton bg-white rounded-lg shadow-md p-4 animate-pulse">
+        <div class="h-6 bg-gray-200 rounded w-3/4 mb-3"></div>
+        <div class="h-4 bg-gray-200 rounded w-full mb-2"></div>
+        <div class="h-4 bg-gray-200 rounded w-5/6"></div>
+      </div>
+      <div class="podcast-skeleton bg-white rounded-lg shadow-md p-4 animate-pulse">
+        <div class="h-6 bg-gray-200 rounded w-3/4 mb-3"></div>
+        <div class="h-4 bg-gray-200 rounded w-full mb-2"></div>
+        <div class="h-4 bg-gray-200 rounded w-5/6"></div>
+      </div>
+    </div>
+  </main>
+
+  <footer class="bg-white border-t mt-12 py-6">
+    <div class="container mx-auto px-4 text-center text-gray-600">
+      <p>
+        Generated from <a href="https://github.com/avelino/awesome-geek-podcasts"
+          class="text-blue-600 hover:underline">awesome-geek-podcasts</a>
+      </p>
+      <p id="lastUpdated" class="text-sm mt-2">Last updated: Loading...</p>
+    </div>
+  </footer>
+
+  <script src="js/app.js"></script>
+</body>
+
+</html>

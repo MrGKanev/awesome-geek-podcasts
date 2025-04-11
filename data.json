@@ -1,0 +1,51 @@
+{
+  "title": "Awesome Geek Podcasts",
+  "description": "A curated list of podcasts we like to listen to. Old/Original list.",
+  "languages": [
+    {
+      "name": "English",
+      "id": "english"
+    },
+    {
+      "name": "Portuguese",
+      "id": "portuguese"
+    },
+    {
+      "name": "Spanish",
+      "id": "spanish"
+    },
+    {
+      "name": "Russian",
+      "id": "russian"
+    },
+    {
+      "name": "Persian",
+      "id": "persian"
+    }
+  ],
+  "podcasts": [
+    {
+      "name": ".NET Rocks!",
+      "url": "https://www.dotnetrocks.com/",
+      "description": "The internet audio talk show for .NET developer with Carl Franklin and Richard Campbell.",
+      "language": "English",
+      "languageId": "english"
+    },
+    {
+      "name": "/dev/hell",
+      "url": "http://devhell.info/",
+      "description": "Chris Hartjes and Ed Finkler are trapped in Development Hell, where they talk mostly about PHP, web, their development experiences and also with special guests.",
+      "language": "English",
+      "languageId": "english"
+    },
+    {
+      "name": "Laravel Portugal Live",
+      "url": "https://laravel.pt",
+      "description": "Os membros do Laravel Portugal reunem-se para falar sobre Laravel, PHP, a comunidade Portuguesa, ideias e muito mais. @joselaborges",
+      "language": "Portuguese",
+      "languageId": "portuguese"
+    }
+  ],
+  "tooling": "<ul>\n<li><a href=\"https://www.pocketcasts.com/\">Pocket Casts</a></li>\n<li><a href=\"https://overcast.fm\">Overcast</a> - An elegant podcast tracker for iOS and the web</li>\n<li><a href=\"http://antennapod.org\">AntennaPod</a> - (Android and Open Source)</li>\n</ul>",
+  "lastUpdated": "2025-04-11T12:00:00.000Z"
+}
