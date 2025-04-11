@@ -1,0 +1,38 @@
+name: Build Website from README
+
+on:
+  push:
+    branches: [ main, master ]
+    paths:
+      - 'README.md'
+  pull_request:
+    branches: [ main, master ]
+    paths:
+      - 'README.md'
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+        
+      - name: Set up Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: '16'
+          
+      - name: Install dependencies
+        run: |
+          npm install
+          
+      - name: Build website
+        run: node scripts/build-site.js
+        
+      - name: Deploy to GitHub Pages
+        uses: JamesIves/github-pages-deploy-action@4.1.5
+        with:
+          branch: gh-pages
+          folder: public
