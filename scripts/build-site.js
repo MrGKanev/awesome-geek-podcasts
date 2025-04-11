@@ -5,8 +5,6 @@ const cheerio = require('cheerio');
 
 // Ensure directories exist
 fs.ensureDirSync(path.join(__dirname, '../public'));
-fs.ensureDirSync(path.join(__dirname, '../public/css'));
-fs.ensureDirSync(path.join(__dirname, '../public/js'));
 
 // Read README.md content
 const readmePath = path.join(__dirname, '../README.md');
@@ -17,10 +15,6 @@ const rawHtml = marked.parse(readmeContent);
 
 // Process HTML with cheerio
 const $ = cheerio.load(rawHtml);
-
-// Extract title and introduction
-const title = $('h1').first().text();
-const introduction = $('h1').first().next('p').text();
 
 // Organize podcast data by language
 const languageSections = {};
@@ -60,123 +54,69 @@ $('h2').each((i, elem) => {
   }
 });
 
-// Get tooling section if available
-let toolingContent = '';
-$('h3').each((i, elem) => {
-  const sectionTitle = $(elem).text();
-  if (sectionTitle === 'Tooling') {
-    let current = $(elem).next();
-    while (current.length && current[0].name !== 'h3' && current[0].name !== 'h2') {
-      toolingContent += $.html(current);
-      current = current.next();
-    }
-  }
-});
-
-// Create JSON data for search functionality
-const allPodcasts = [];
-Object.keys(languageSections).forEach(language => {
-  languageSections[language].forEach(podcast => {
-    allPodcasts.push({
-      ...podcast,
-      language
-    });
-  });
-});
-
-// Write JSON data file
-fs.writeFileSync(
-  path.join(__dirname, '../public/js/podcasts.json'), 
-  JSON.stringify(allPodcasts)
-);
-
-// Create HTML template
-const htmlTemplate = `
-<!DOCTYPE html>
+// Create HTML content
+let htmlContent = `<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>${title}</title>
+  <title>Awesome Geek Podcasts</title>
   <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 </head>
 <body class="bg-gray-50 min-h-screen">
   <div class="container mx-auto px-4 py-8">
     <header class="mb-8 text-center">
-      <h1 class="text-4xl font-bold text-gray-800 mb-4">${title}</h1>
-      <p class="text-lg text-gray-600">${introduction}</p>
+      <h1 class="text-4xl font-bold text-gray-800 mb-4">Awesome Geek Podcasts</h1>
+      <p class="text-lg text-gray-600">A curated list of podcasts we like to listen to.</p>
     </header>
     
     <div class="mb-8">
       <div class="bg-white rounded-lg shadow-md p-6">
-        <div class="mb-6">
-          <div class="relative">
-            <input 
-              type="text" 
-              id="search-input" 
-              placeholder="Search podcasts..." 
-              class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-            >
-            <div class="absolute right-3 top-2.5 text-gray-400">
-              <i class="fas fa-search"></i>
-            </div>
-          </div>
-        </div>
-        
         <h2 class="text-2xl font-bold text-gray-800 mb-4">Languages</h2>
-        <div class="flex flex-wrap gap-2">
-          <button 
-            data-filter="all" 
-            class="filter-btn bg-blue-500 text-white px-3 py-1 rounded-full hover:bg-blue-600 transition"
-          >
-            All
-          </button>
-          ${languages.map(lang => `
-            <button 
-              data-filter="${lang.toLowerCase().replace(/\s+/g, '-')}" 
-              class="filter-btn bg-blue-100 text-blue-800 px-3 py-1 rounded-full hover:bg-blue-200 transition"
-            >
-              ${lang}
-            </button>
-          `).join('')}
+        <div class="flex flex-wrap gap-2">`;
+
+// Add language buttons
+htmlContent += `<button id="btn-all" class="filter-btn bg-blue-500 text-white px-3 py-1 rounded-full">All</button>`;
+
+languages.forEach(lang => {
+  const langId = lang.toLowerCase().replace(/\s+/g, '-');
+  htmlContent += `<button id="btn-${langId}" class="filter-btn bg-blue-100 text-blue-800 px-3 py-1 rounded-full">${lang}</button>`;
+});
+
+htmlContent += `
         </div>
       </div>
     </div>
     
-    <div id="search-results" class="hidden mb-8 bg-white rounded-lg shadow-md p-6">
-      <h2 class="text-2xl font-bold text-gray-800 mb-4">Search Results</h2>
-      <div id="results-container" class="space-y-6"></div>
+    <div id="language-sections" class="space-y-8">`;
+
+// Add language sections
+languages.forEach(lang => {
+  const langId = lang.toLowerCase().replace(/\s+/g, '-');
+  htmlContent += `
+    <section id="section-${langId}" class="language-section bg-white rounded-lg shadow-md p-6">
+      <h2 class="text-2xl font-bold text-gray-800 mb-6">In ${lang}</h2>
+      <div class="space-y-6">`;
+  
+  const podcasts = languageSections[lang] || [];
+  podcasts.forEach(podcast => {
+    htmlContent += `
+      <div class="podcast-item border-b border-gray-200 pb-4 last:border-0">
+        <a href="${podcast.url}" class="text-xl font-semibold text-blue-600 hover:text-blue-800 transition" target="_blank">
+          ${podcast.name}
+        </a>
+        <p class="text-gray-700 mt-1">${podcast.description}</p>
+      </div>`;
+  });
+  
+  htmlContent += `
+      </div>
+    </section>`;
+});
+
+// Add footer and scripts
+htmlContent += `
     </div>
-    
-    <div id="language-sections" class="space-y-8">
-      ${languages.map(lang => `
-        <section 
-          id="${lang.toLowerCase().replace(/\s+/g, '-')}" 
-          data-language="${lang.toLowerCase().replace(/\s+/g, '-')}"
-          class="language-section bg-white rounded-lg shadow-md p-6"
-        >
-          <h2 class="text-2xl font-bold text-gray-800 mb-6">In ${lang}</h2>
-          <div class="space-y-6">
-            ${(languageSections[lang] || []).map(podcast => `
-              <div class="podcast-item border-b border-gray-200 pb-4 last:border-0">
-                <a href="${podcast.url}" class="text-xl font-semibold text-blue-600 hover:text-blue-800 transition" target="_blank">
-                  ${podcast.name}
-                </a>
-                <p class="text-gray-700 mt-1">${podcast.description}</p>
-              </div>
-            `).join('')}
-          </div>
-        </section>
-      `).join('')}
-    </div>
-    
-    ${toolingContent ? `
-    <div class="mt-8 bg-white rounded-lg shadow-md p-6">
-      <h2 class="text-2xl font-bold text-gray-800 mb-6">Tooling</h2>
-      ${toolingContent}
-    </div>
-    ` : ''}
     
     <footer class="mt-12 text-center text-gray-600">
       <p>Generated from <a href="https://github.com/avelino/awesome-geek-podcasts" class="text-blue-600 hover:underline">awesome-geek-podcasts</a>.</p>
@@ -185,114 +125,50 @@ const htmlTemplate = `
   </div>
   
   <script>
-    // DOM Elements
-    const searchInput = document.getElementById('search-input');
-    const searchResults = document.getElementById('search-results');
-    const resultsContainer = document.getElementById('results-container');
-    const languageSections = document.getElementById('language-sections');
-    const filterButtons = document.querySelectorAll('.filter-btn');
-    const sections = document.querySelectorAll('.language-section');
-    
-    // Event Listeners
-    searchInput.addEventListener('input', handleSearch);
-    filterButtons.forEach(btn => {
-      btn.addEventListener('click', handleFilter);
-    });
-    
-    // Search functionality
-    let podcasts = [];
-    
-    // Fetch podcast data
-    fetch('js/podcasts.json')
-      .then(response => response.json())
-      .then(data => {
-        podcasts = data;
-      })
-      .catch(error => console.error('Error loading podcast data:', error));
-    
-    function handleSearch() {
-      const searchTerm = searchInput.value.toLowerCase().trim();
-      
-      if (searchTerm.length < 2) {
-        searchResults.classList.add('hidden');
-        languageSections.classList.remove('hidden');
-        return;
-      }
-      
-      const matches = podcasts.filter(podcast => 
-        podcast.name.toLowerCase().includes(searchTerm) || 
-        podcast.description.toLowerCase().includes(searchTerm)
-      );
-      
-      if (matches.length > 0) {
-        renderSearchResults(matches);
-        searchResults.classList.remove('hidden');
-        languageSections.classList.add('hidden');
-      } else {
-        resultsContainer.innerHTML = '<p class="text-gray-500">No podcasts found matching your search.</p>';
-        searchResults.classList.remove('hidden');
-        languageSections.classList.add('hidden');
-      }
-    }
-    
-    function renderSearchResults(results) {
-      resultsContainer.innerHTML = '';
-      
-      results.forEach(podcast => {
-        const podcastElement = document.createElement('div');
-        podcastElement.className = 'podcast-item border-b border-gray-200 pb-4 last:border-0';
-        podcastElement.innerHTML = 
-          '<div class="flex items-start justify-between">' +
-            '<div>' +
-              '<a href="' + podcast.url + '" class="text-xl font-semibold text-blue-600 hover:text-blue-800 transition" target="_blank">' +
-                podcast.name +
-              '</a>' +
-              '<p class="text-gray-700 mt-1">' + podcast.description + '</p>' +
-            '</div>' +
-            '<span class="text-sm bg-blue-100 text-blue-800 px-2 py-1 rounded-full">' + podcast.language + '</span>' +
-          '</div>';
-        
-        resultsContainer.appendChild(podcastElement);
+    // Simple filter functionality
+    document.getElementById('btn-all').addEventListener('click', function() {
+      document.querySelectorAll('.language-section').forEach(function(section) {
+        section.style.display = 'block';
       });
-    }
-    
-    function handleFilter() {
-      const filter = this.getAttribute('data-filter');
       
-      // Reset search field
-      searchInput.value = '';
-      searchResults.classList.add('hidden');
-      languageSections.classList.remove('hidden');
-      
-      // Update active button style
-      filterButtons.forEach(btn => {
+      // Update active button
+      document.querySelectorAll('.filter-btn').forEach(function(btn) {
         btn.classList.remove('bg-blue-500', 'text-white');
         btn.classList.add('bg-blue-100', 'text-blue-800');
       });
       this.classList.remove('bg-blue-100', 'text-blue-800');
       this.classList.add('bg-blue-500', 'text-white');
-      
-      // Filter sections
-      if (filter === 'all') {
-        sections.forEach(section => {
-          section.classList.remove('hidden');
-        });
-      } else {
-        sections.forEach(section => {
-          if (section.getAttribute('data-language') === filter) {
-            section.classList.remove('hidden');
-          } else {
-            section.classList.add('hidden');
-          }
+    });
+    
+    // Add event listeners for language buttons
+    document.querySelectorAll('.filter-btn').forEach(function(btn) {
+      if (btn.id !== 'btn-all') {
+        btn.addEventListener('click', function() {
+          const langId = this.id.replace('btn-', '');
+          
+          // Hide all sections
+          document.querySelectorAll('.language-section').forEach(function(section) {
+            section.style.display = 'none';
+          });
+          
+          // Show selected section
+          document.getElementById('section-' + langId).style.display = 'block';
+          
+          // Update active button
+          document.querySelectorAll('.filter-btn').forEach(function(btn) {
+            btn.classList.remove('bg-blue-500', 'text-white');
+            btn.classList.add('bg-blue-100', 'text-blue-800');
+          });
+          this.classList.remove('bg-blue-100', 'text-blue-800');
+          this.classList.add('bg-blue-500', 'text-white');
         });
       }
-    }
+    });
   </script>
 </body>
-</html>
-`;
+</html>`;
 
 // Write HTML to file
-fs.writeFileSync(path.join(__dirname, '../public/index.html'), htmlTemplate);
+fs.writeFileSync(path.join(__dirname, '../public/index.html'), htmlContent);
 
 console.log('Website built successfully!');
