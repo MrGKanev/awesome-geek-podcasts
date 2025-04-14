@@ -153,7 +153,7 @@ function generatePodcastData() {
     console.log(`Total podcasts: ${allPodcasts.length}`);
     
     // Create output directory if it doesn't exist
-    const outputDir = './public';
+    const outputDir = './';
     if (!fs.existsSync(outputDir)) {
       fs.mkdirSync(outputDir, { recursive: true });
     }
