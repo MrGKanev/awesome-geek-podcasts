@@ -1,4 +1,4 @@
-name: Generate Podcast JSON Data
+name: Generate Data JSON
 
 on:
   push:
@@ -44,7 +44,7 @@ jobs:
           
           // Extract title and description
           const title = document.querySelector('h1') ? document.querySelector('h1').textContent : 'Awesome Geek Podcasts';
-          const description = document.querySelector('h1+p') ? document.querySelector('h1+p').textContent : 'A curated list of podcasts we like to listen to.';
+          const description = document.querySelector('h1+p') ? document.querySelector('h1+p').textContent : 'A curated list of podcasts we like to listen to. Old/Original list.';
           
           // Find language sections
           const languages = [];
@@ -54,7 +54,7 @@ jobs:
             const text = heading.textContent;
             if (text.startsWith('In ')) {
               const language = text.replace('In ', '');
-              const languageId = language.toLowerCase().replace(/\s+/g, '-');
+              const languageId = language.toLowerCase().replace(/\s+/g, '');
               languages.push({ name: language, id: languageId });
               
               // Get podcasts under this language
@@ -105,17 +105,7 @@ jobs:
           };
           
           // Write to file
-          if (!fs.existsSync('public')) {
-            fs.mkdirSync('public', { recursive: true });
-          }
-          if (!fs.existsSync('public/js')) {
-            fs.mkdirSync('public/js', { recursive: true });
-          }
-          if (!fs.existsSync('public/css')) {
-            fs.mkdirSync('public/css', { recursive: true });
-          }
-          
-          fs.writeFileSync('public/data.json', JSON.stringify(data, null, 2));
+          fs.writeFileSync('data.json', JSON.stringify(data, null, 2));
           
           console.log('JSON data generated successfully!');
           EOL
@@ -125,20 +115,16 @@ jobs:
         
       - name: Generate JSON data
         run: node scripts/generate-json.js
-      
-      - name: Copy static files
-        run: |
-          # Copy index.html
-          cp index.html public/
-          
-          # Copy JavaScript
-          cp js/app.js public/js/
-          
-          # Copy CSS
-          cp css/style.css public/css/
         
-      - name: Deploy to GitHub Pages
-        uses: JamesIves/github-pages-deploy-action@4.1.5
+      - name: Commit data.json
+        run: |
+          git config --local user.email "action@github.com"
+          git config --local user.name "GitHub Action"
+          git add data.json
+          git commit -m "Update data.json" || echo "No changes to commit"
+          
+      - name: Push changes
+        uses: ad-m/github-push-action@master
         with:
-          branch: gh-pages
-          folder: public
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          branch: ${{ github.ref }}

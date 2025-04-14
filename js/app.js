@@ -13,7 +13,7 @@ document.addEventListener('DOMContentLoaded', async function() {
   
   try {
     // Fetch podcast data
-    const response = await fetch('data.json');
+    const response = await fetch('../data.json');
     const data = await response.json();
     
     // Update last updated date
@@ -97,4 +97,17 @@ document.addEventListener('DOMContentLoaded', async function() {
       const podcastCard = document.createElement('div');
       podcastCard.className = 'bg-white rounded-lg shadow-md p-4 hover:shadow-lg transition duration-200';
       
-      const languageBadge = `<span class="inline-bl
+      const languageBadge = `<span class="inline-block text-xs font-medium bg-blue-100 text-blue-800 rounded-full px-2 py-1 mb-2">${podcast.language}</span>`;
+      
+      podcastCard.innerHTML = `
+        ${languageBadge}
+        <h3 class="text-lg font-semibold text-gray-800 mb-2">
+          <a href="${podcast.url}" target="_blank" class="hover:text-blue-600 transition">${podcast.name}</a>
+        </h3>
+        <p class="text-gray-600 text-sm">${podcast.description}</p>
+      `;
+      
+      podcastList.appendChild(podcastCard);
+    });
+  }
+});
