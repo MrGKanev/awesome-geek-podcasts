@@ -32,82 +32,87 @@ jobs:
           const { marked } = require('marked');
           const { JSDOM } = require('jsdom');
           
-          // Read README content
-          const readme = fs.readFileSync('README.md', 'utf8');
-          
-          // Convert markdown to HTML
-          const html = marked.parse(readme);
-          
-          // Parse HTML
-          const dom = new JSDOM(html);
-          const document = dom.window.document;
-          
-          // Extract title and description
-          const title = document.querySelector('h1') ? document.querySelector('h1').textContent : 'Awesome Geek Podcasts';
-          const description = document.querySelector('h1+p') ? document.querySelector('h1+p').textContent : 'A curated list of podcasts we like to listen to. Old/Original list.';
-          
-          // Find language sections
-          const languages = [];
-          const allPodcasts = [];
-          
-          Array.from(document.querySelectorAll('h2')).forEach(heading => {
-            const text = heading.textContent;
-            if (text.startsWith('In ')) {
-              const language = text.replace('In ', '');
-              const languageId = language.toLowerCase().replace(/\s+/g, '');
-              languages.push({ name: language, id: languageId });
-              
-              // Get podcasts under this language
-              let current = heading.nextElementSibling;
-              while (current && current.tagName !== 'H2') {
-                if (current.tagName === 'UL') {
-                  Array.from(current.querySelectorAll('li')).forEach(item => {
-                    const link = item.querySelector('a');
-                    if (link) {
-                      const podcast = {
-                        name: link.textContent,
-                        url: link.href,
-                        description: item.textContent.replace(link.textContent, '').trim(),
-                        language: language,
-                        languageId: languageId
-                      };
-                      allPodcasts.push(podcast);
-                    }
-                  });
+          try {
+            // Read README content
+            const readme = fs.readFileSync('README.md', 'utf8');
+            
+            // Convert markdown to HTML
+            const html = marked.parse(readme);
+            
+            // Parse HTML
+            const dom = new JSDOM(html);
+            const document = dom.window.document;
+            
+            // Extract title and description
+            const title = document.querySelector('h1') ? document.querySelector('h1').textContent : 'Awesome Geek Podcasts';
+            const description = document.querySelector('h1+p') ? document.querySelector('h1+p').textContent : 'A curated list of podcasts we like to listen to. Old/Original list.';
+            
+            // Find language sections
+            const languages = [];
+            const allPodcasts = [];
+            
+            Array.from(document.querySelectorAll('h2')).forEach(heading => {
+              const text = heading.textContent;
+              if (text.startsWith('In ')) {
+                const language = text.replace('In ', '');
+                const languageId = language.toLowerCase().replace(/\s+/g, '');
+                languages.push({ name: language, id: languageId });
+                
+                // Get podcasts under this language
+                let current = heading.nextElementSibling;
+                while (current && current.tagName !== 'H2') {
+                  if (current.tagName === 'UL') {
+                    Array.from(current.querySelectorAll('li')).forEach(item => {
+                      const link = item.querySelector('a');
+                      if (link) {
+                        const podcast = {
+                          name: link.textContent,
+                          url: link.href,
+                          description: item.textContent.replace(link.textContent, '').trim(),
+                          language: language,
+                          languageId: languageId
+                        };
+                        allPodcasts.push(podcast);
+                      }
+                    });
+                  }
+                  current = current.nextElementSibling;
                 }
-                current = current.nextElementSibling;
               }
-            }
-          });
-          
-          // Extract tooling info
-          let tooling = null;
-          Array.from(document.querySelectorAll('h3')).forEach(heading => {
-            if (heading.textContent === 'Tooling') {
-              let toolingHtml = '';
-              let current = heading.nextElementSibling;
-              while (current && current.tagName !== 'H3' && current.tagName !== 'H2') {
-                toolingHtml += current.outerHTML;
-                current = current.nextElementSibling;
+            });
+            
+            // Extract tooling info
+            let tooling = null;
+            Array.from(document.querySelectorAll('h3')).forEach(heading => {
+              if (heading.textContent === 'Tooling') {
+                let toolingHtml = '';
+                let current = heading.nextElementSibling;
+                while (current && current.tagName !== 'H3' && current.tagName !== 'H2') {
+                  toolingHtml += current.outerHTML;
+                  current = current.nextElementSibling;
+                }
+                tooling = toolingHtml;
               }
-              tooling = toolingHtml;
-            }
-          });
-          
-          // Create data object
-          const data = {
-            title,
-            description,
-            languages,
-            podcasts: allPodcasts,
-            tooling,
-            lastUpdated: new Date().toISOString()
-          };
-          
-          // Write to file
-          fs.writeFileSync('data.json', JSON.stringify(data, null, 2));
-          
-          console.log('JSON data generated successfully!');
+            });
+            
+            // Create data object
+            const data = {
+              title,
+              description,
+              languages,
+              podcasts: allPodcasts,
+              tooling,
+              lastUpdated: new Date().toISOString()
+            };
+            
+            // Write to file
+            fs.writeFileSync('data.json', JSON.stringify(data, null, 2));
+            
+            console.log('JSON data generated successfully!');
+          } catch (error) {
+            console.error('Error generating JSON:', error);
+            process.exit(1);
+          }
           EOL
           
       - name: Install dependencies

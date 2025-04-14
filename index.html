@@ -4,68 +4,200 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Awesome Geek Podcasts</title>
+  <meta name="description"
+    content="Explore a curated collection of the best technology, programming, and geek podcasts from around the world. Find podcasts in multiple languages for developers, designers, and tech enthusiasts.">
+  <meta name="keywords"
+    content="tech podcasts, programming podcasts, developer podcasts, technology shows, geek podcasts, coding podcasts">
+  <meta name="author" content="Awesome Geek Podcasts Community">
+  <title>Awesome Geek Podcasts | Best Tech & Programming Podcasts Collection</title>
+
+  <!-- Favicon -->
+  <link rel="icon"
+    href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🎧</text></svg>">
+
+  <!-- Stylesheets -->
   <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
   <link rel="stylesheet" href="css/style.css">
+
+  <!-- Open Graph Meta Tags -->
+  <meta property="og:title" content="Awesome Geek Podcasts Collection">
+  <meta property="og:description" content="Discover the best tech and programming podcasts from around the world.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://mrgkanev.github.io/awesome-geek-podcasts/">
+
+  <!-- Twitter Meta Tags -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Awesome Geek Podcasts Collection">
+  <meta name="twitter:description" content="Discover the best tech and programming podcasts from around the world.">
+
+  <!-- Schema.org markup for Google -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebSite",
+    "name": "Awesome Geek Podcasts",
+    "description": "A curated collection of tech, programming, and geek podcasts from around the world",
+    "url": "https://mrgkanev.github.io/awesome-geek-podcasts/"
+  }
+  </script>
+
+  <!-- Dark mode support -->
+  <script>
+    // Check for saved theme preference or prefer-color-scheme
+    const savedTheme = localStorage.getItem('theme');
+    const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+
+    // Apply theme immediately to prevent flashing
+    if (savedTheme === 'dark' || (!savedTheme && prefersDark)) {
+      document.documentElement.classList.add('dark');
+    }
+  </script>
 </head>
 
-<body class="bg-gray-100">
-  <header class="bg-white shadow-md">
-    <div class="container mx-auto px-4 py-6">
-      <h1 class="text-3xl font-bold text-center text-gray-800">Awesome Geek Podcasts</h1>
-      <p class="text-center text-gray-600 mt-2">A curated list of podcasts we like to listen to</p>
+<body class="bg-gray-50 dark:bg-gray-900 transition-colors duration-300">
+  <div class="min-h-screen flex flex-col">
+    <!-- Theme Toggle -->
+    <div class="absolute top-4 right-4 z-10">
+      <button id="themeToggle"
+        class="p-2 rounded-full bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-200 focus:outline-none transition-colors">
+        <svg id="sunIcon" class="w-5 h-5 hidden dark:block" xmlns="http://www.w3.org/2000/svg" fill="none"
+          viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+            d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" />
+        </svg>
+        <svg id="moonIcon" class="w-5 h-5 block dark:hidden" xmlns="http://www.w3.org/2000/svg" fill="none"
+          viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+            d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
+        </svg>
+      </button>
     </div>
-  </header>
 
-  <main class="container mx-auto px-4 py-8">
-    <div class="mb-8">
-      <div class="flex flex-col md:flex-row gap-4">
-        <div class="w-full md:w-2/3">
-          <input type="text" id="searchInput" placeholder="Search podcasts..."
-            class="w-full p-3 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500">
+    <!-- Header -->
+    <header
+      class="bg-gradient-to-r from-blue-600 to-indigo-700 dark:from-indigo-900 dark:to-purple-900 shadow-lg transition-colors">
+      <div class="container mx-auto px-4 py-10">
+        <div class="flex flex-col items-center">
+          <div class="text-5xl mb-2">🎧</div>
+          <h1 class="text-3xl md:text-4xl font-bold text-center text-white">Awesome Geek Podcasts</h1>
+          <p class="text-center text-blue-100 dark:text-indigo-200 mt-2 max-w-md mx-auto">A community-curated collection
+            of the best podcasts for developers, designers, and tech enthusiasts</p>
         </div>
-        <div class="w-full md:w-1/3">
-          <select id="languageFilter"
-            class="w-full p-3 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500">
-            <option value="all">All Languages</option>
-          </select>
+      </div>
+      <div class="bg-white dark:bg-gray-800 h-10 rounded-t-3xl -mb-2 mt-8"></div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="container mx-auto px-4 py-6 flex-grow">
+      <!-- Search & Filter -->
+      <section aria-labelledby="search-heading">
+        <h2 id="search-heading" class="sr-only">Search and Filter Podcasts</h2>
+        <div class="bg-white dark:bg-gray-800 rounded-lg shadow-md p-4 mb-8 transition-colors">
+          <div class="flex flex-col md:flex-row gap-4">
+            <div class="w-full md:w-2/3">
+              <label for="searchInput" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Search
+                podcasts</label>
+              <div class="relative">
+                <svg class="absolute left-3 top-3 w-5 h-5 text-gray-400" xmlns="http://www.w3.org/2000/svg" fill="none"
+                  viewBox="0 0 24 24" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                    d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                </svg>
+                <input type="text" id="searchInput" placeholder="Search by title, description or keywords..."
+                  class="w-full pl-10 p-3 border border-gray-300 dark:border-gray-600 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 dark:focus:ring-indigo-500 bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100 transition-colors">
+              </div>
+            </div>
+            <div class="w-full md:w-1/3">
+              <label for="languageFilter" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Filter
+                by language</label>
+              <div class="relative">
+                <svg class="absolute right-3 top-3 w-5 h-5 text-gray-400 pointer-events-none"
+                  xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+                </svg>
+                <select id="languageFilter"
+                  class="appearance-none w-full p-3 border border-gray-300 dark:border-gray-600 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 dark:focus:ring-indigo-500 bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100 transition-colors">
+                  <option value="all">All Languages</option>
+                </select>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Results Section -->
+      <section aria-labelledby="results-heading">
+        <div class="flex flex-wrap items-center justify-between mb-4">
+          <h2 id="results-heading" class="text-xl font-semibold text-gray-800 dark:text-gray-200 transition-colors">
+            Featured Podcasts</h2>
+          <div id="resultsCount" class="text-gray-600 dark:text-gray-400 font-medium transition-colors"></div>
+        </div>
+
+        <!-- Podcast List -->
+        <div id="podcastList" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          <!-- Loading skeletons -->
+          <div
+            class="podcast-skeleton bg-white dark:bg-gray-800 rounded-lg shadow-md p-4 animate-pulse transition-colors">
+            <div class="h-6 bg-gray-200 dark:bg-gray-700 rounded w-3/4 mb-3"></div>
+            <div class="h-4 bg-gray-200 dark:bg-gray-700 rounded w-full mb-2"></div>
+            <div class="h-4 bg-gray-200 dark:bg-gray-700 rounded w-5/6"></div>
+          </div>
+          <div
+            class="podcast-skeleton bg-white dark:bg-gray-800 rounded-lg shadow-md p-4 animate-pulse transition-colors">
+            <div class="h-6 bg-gray-200 dark:bg-gray-700 rounded w-3/4 mb-3"></div>
+            <div class="h-4 bg-gray-200 dark:bg-gray-700 rounded w-full mb-2"></div>
+            <div class="h-4 bg-gray-200 dark:bg-gray-700 rounded w-5/6"></div>
+          </div>
+          <div
+            class="podcast-skeleton bg-white dark:bg-gray-800 rounded-lg shadow-md p-4 animate-pulse transition-colors">
+            <div class="h-6 bg-gray-200 dark:bg-gray-700 rounded w-3/4 mb-3"></div>
+            <div class="h-4 bg-gray-200 dark:bg-gray-700 rounded w-full mb-2"></div>
+            <div class="h-4 bg-gray-200 dark:bg-gray-700 rounded w-5/6"></div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <!-- Footer -->
+    <footer
+      class="bg-white dark:bg-gray-800 border-t border-gray-200 dark:border-gray-700 mt-12 py-6 transition-colors">
+      <div class="container mx-auto px-4 text-center">
+        <p class="text-gray-600 dark:text-gray-400 transition-colors">
+          Generated from <a href="https://github.com/MrGKanev/awesome-geek-podcasts"
+            class="text-blue-600 dark:text-blue-400 hover:underline transition-colors">awesome-geek-podcasts</a>
+        </p>
+        <p id="lastUpdated" class="text-sm mt-2 text-gray-500 dark:text-gray-500 transition-colors">Last updated:
+          Loading...</p>
+        <div class="mt-4 flex justify-center space-x-4">
+          <a href="https://github.com/MrGKanev/awesome-geek-podcasts" target="_blank" rel="noopener noreferrer"
+            class="text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-300 transition-colors">
+            <span class="sr-only">GitHub</span>
+            <svg class="h-6 w-6" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+              <path fill-rule="evenodd"
+                d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z"
+                clip-rule="evenodd" />
+            </svg>
+          </a>
         </div>
       </div>
-    </div>
+    </footer>
+  </div>
 
-    <div id="resultsCount" class="mb-4 text-gray-600 font-medium"></div>
-
-    <div id="podcastList" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-      <!-- Podcasts will be loaded here -->
-      <div class="podcast-skeleton bg-white rounded-lg shadow-md p-4 animate-pulse">
-        <div class="h-6 bg-gray-200 rounded w-3/4 mb-3"></div>
-        <div class="h-4 bg-gray-200 rounded w-full mb-2"></div>
-        <div class="h-4 bg-gray-200 rounded w-5/6"></div>
-      </div>
-      <div class="podcast-skeleton bg-white rounded-lg shadow-md p-4 animate-pulse">
-        <div class="h-6 bg-gray-200 rounded w-3/4 mb-3"></div>
-        <div class="h-4 bg-gray-200 rounded w-full mb-2"></div>
-        <div class="h-4 bg-gray-200 rounded w-5/6"></div>
-      </div>
-      <div class="podcast-skeleton bg-white rounded-lg shadow-md p-4 animate-pulse">
-        <div class="h-6 bg-gray-200 rounded w-3/4 mb-3"></div>
-        <div class="h-4 bg-gray-200 rounded w-full mb-2"></div>
-        <div class="h-4 bg-gray-200 rounded w-5/6"></div>
-      </div>
-    </div>
-  </main>
-
-  <footer class="bg-white border-t mt-12 py-6">
-    <div class="container mx-auto px-4 text-center text-gray-600">
-      <p>
-        Generated from <a href="https://github.com/avelino/awesome-geek-podcasts"
-          class="text-blue-600 hover:underline">awesome-geek-podcasts</a>
-      </p>
-      <p id="lastUpdated" class="text-sm mt-2">Last updated: Loading...</p>
-    </div>
-  </footer>
-
+  <!-- Scripts -->
   <script src="js/app.js"></script>
+  <script>
+    // Fix for dark mode toggle
+    document.addEventListener('DOMContentLoaded', function () {
+      const themeToggle = document.getElementById('themeToggle');
+
+      // Toggle theme
+      themeToggle.addEventListener('click', function () {
+        document.documentElement.classList.toggle('dark');
+        const isDark = document.documentElement.classList.contains('dark');
+        localStorage.setItem('theme', isDark ? 'dark' : 'light');
+      });
+    });
+  </script>
 </body>
 
 </html>
